@@ -127,24 +127,3 @@ p.content-meta {
     @extend %metaBase;
     margin-bottom: 1em;
 }
-
-// Caption
-figcaption {
-    text-align: center;
-    color: var(--gray);
-    margin: 0;
-
-    a {
-        font-weight: normal;
-        color: var(--tertiary);
-
-        &:hover {
-            color: var(--tertiary) !important;
-        }
-    }
-}
-
-// Emphatize without bold or italics
-lg {
-    color: var(--primary);
-}

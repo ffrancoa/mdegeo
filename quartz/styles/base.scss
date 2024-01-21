@@ -250,6 +250,7 @@ input[type="checkbox"] {
 
 blockquote {
   margin-left: 0em;
+  text-align: justify;
   border-left: 3px solid var(--secondary);
   padding-left: 1em;
   transition: border-color 0.2s ease;
@@ -260,15 +261,12 @@ blockquote {
 
   i,
   em {
+    color: var(--dark);
     font-weight: bold;
   }
 
   a {
     color: var(--tertiary);
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -571,7 +569,7 @@ ol.overflow {
     position: absolute;
     left: 0;
     bottom: 0;
-    opacity: 0; // I've changed this to 0
+    opacity: 1;
     transition: opacity 0.3s ease;
     background: linear-gradient(transparent 0px, var(--light));
   }
@@ -581,4 +579,9 @@ ol.overflow {
   ul {
     padding-left: 1rem;
   }
+}
+
+under {
+  text-decoration: underline;
+  color: var(--gray);
 }
