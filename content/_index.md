@@ -11,7 +11,7 @@ enableToc: false
 ¿Qué esperas? Alístate, y empecemos a escalar las montañas.
 
 ![Cover](/images/cover.jpg)
-<figcaption>Montañas de Saile, Austria (fotografía tomada por <a href="https://unsplash.com/@onixion">Alin Andersen)</a></figcaption>
+<figcaption>Montañas de Saile, Austria (fotografía tomada por <a href="https://unsplash.com/@onixion">Alin Andersen</a>)</figcaption>
 
 ## Acerca de mí
 
