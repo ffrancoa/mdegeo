@@ -57,7 +57,7 @@ h4 {
 tbody,
 li,
 p {
-    line-height: 1.55rem;
+    line-height: 1.5rem;
 }
 
 .page {
@@ -70,6 +70,7 @@ p {
 
 // External Links
 a {
+    display: inline;
     text-decoration: none;
 
     &:hover {
@@ -235,7 +236,9 @@ figcaption {
 
 // Blockquotes
 blockquote {
-    margin-left: 0em;
+    margin: 1rem 2em 1em 0em;
+    border-left: 3px solid var(--secondary);
+    padding-left: 1em;
     transition: border-color 0.2s ease;
 
     &:hover {
