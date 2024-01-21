@@ -1,0 +1,150 @@
+@use "./base.scss";
+
+// put your custom CSS here!
+@use "./variables.scss" as *;
+
+.left {
+    display: grid !important;
+    gap: 1.5rem !important;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content min-content min-content;
+    align-items: center;
+
+    .page-title {
+        grid-area: 1 / 1 / 2 / 3;
+    }
+
+    .search {
+        grid-area: 2 / 1 / 3 / 1;
+    }
+
+    .darkmode {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+
+    @media all and (max-width: $fullPageWidth) {
+        display: flex !important;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    margin-top: 1em;
+    margin-bottom: 0.25em;
+    margin-left: -0.06em !important;
+}
+
+// Table of Contents
+
+div.toc {
+    #toc {
+        color: var(--secondary);
+        font-size: unset;
+    }
+
+    #toc-content ul {
+        li {
+            margin-bottom: 0.15rem;
+        }
+
+        a {
+            color: var(--darkgray);
+        }
+    }
+}
+
+// Breadcrumbs
+
+nav.breadcrumb-container {
+    --bcGap: 0.25em;
+    font-size: 0.88em;
+    color: var(--dark);
+    gap: unset;
+    opacity: 0.6;
+
+    .breadcrumb-element {
+        margin-right: var(--bcGap);
+        text-transform: capitalize;
+
+        >p {
+            display: none;
+        }
+
+        a {
+            color: var(--dark);
+        }
+    }
+}
+
+// Recent
+
+.recent-notes {
+    margin: 0 0 1em;
+}
+
+div.recent-notes>ul.recent-ul>li {
+    margin: 0.75em 0;
+}
+
+.recent-notes .desc p {
+    margin: 0;
+}
+
+.recent-notes .desc a {
+    padding: 0;
+    color: var(--secondary);
+    background: none;
+
+    &:hover {
+        color: var(--tertiary) !important;
+    }
+}
+
+.recent-notes .tags {
+    display: none;
+}
+
+// Meta
+%metaBase {
+    font-size: 0.95em;
+    color: var(--gray);
+    opacity: 1;
+}
+
+p.content-meta {
+    @extend %metaBase;
+    margin-bottom: 2.5em;
+}
+
+.meta {
+    @extend %metaBase;
+    margin-bottom: 1em;
+}
+
+// Caption
+figcaption {
+    text-align: center;
+    color: var(--gray);
+    margin: 0;
+
+    a {
+        font-weight: normal;
+        color: var(--tertiary);
+
+        &:hover {
+            color: var(--tertiary) !important;
+        }
+    }
+}
+
+// Emphatize without bold or italics
+lg {
+    color: var(--primary);
+}
