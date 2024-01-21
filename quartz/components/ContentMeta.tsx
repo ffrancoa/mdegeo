@@ -30,7 +30,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       // Display reading time if enabled
       if (options.showReadingTime) {
         const { text: timeTaken, words: _words } = readingTime(text)
-        segments.push(timeTaken)
+        // segments.push(timeTaken)
       }
 
       return <p class={`content-meta ${displayClass ?? ""}`}>Una memoria del {segments} 🍂</p>
