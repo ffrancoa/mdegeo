@@ -27,6 +27,7 @@
     }
 }
 
+// Typography
 h1,
 h2,
 h3,
@@ -41,8 +42,58 @@ h6 {
     margin-left: -0.06em !important;
 }
 
-// Table of Contents
+h1 {
+    font-size: 1.65rem;
+}
 
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1.12em;
+}
+
+tbody,
+li,
+p {
+    line-height: 1.5rem;
+}
+
+.page {
+    & article {
+        &>h1 {
+            font-size: 1.75em;
+        }
+    }
+}
+
+// External Links
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &.internal {
+        text-decoration: none;
+
+    }
+}
+
+// Selection
+::selection {
+    background: color-mix(in srgb, var(--selection) 75%, transparent);
+    color: currentColor;
+}
+
+// Logo Hover
+text.logotitle:hover {
+    fill: var(--secondary);
+}
+
+// Table of Contents
 div.toc {
     #toc {
         color: var(--secondary);
@@ -61,7 +112,6 @@ div.toc {
 }
 
 // Breadcrumbs
-
 nav.breadcrumb-container {
     --bcGap: 0.25em;
     font-size: 0.88em;
@@ -84,7 +134,6 @@ nav.breadcrumb-container {
 }
 
 // Recent
-
 .recent-notes {
     margin: 0 0 1em;
 }
@@ -128,6 +177,45 @@ p.content-meta {
     margin-bottom: 1em;
 }
 
+// Tables
+.table-container {
+    &>table {
+        padding: 1.5rem;
+        width: 100%;
+    }
+}
+
+th {
+    font-family: var(--headerFont);
+    font-size: 0.95em;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: var(--misc_header);
+    background-color: var(--misc_background);
+    border: 1px solid var(--lightgray);
+    padding: 8px;
+}
+
+td {
+    border: 1px solid var(--lightgray);
+    padding: 0.35em 0.5em;
+    background-color: var(--misc_background2);
+    font-family: var(--bodyFont);
+    font-size: 0.95rem;
+}
+
+// Images
+img {
+    display: block;
+    max-width: 95%;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    filter: sepia(10%) grayscale(20%);
+}
+
 // Caption
 figcaption {
     text-align: center;
@@ -144,7 +232,82 @@ figcaption {
     }
 }
 
+// Blockquotes
+blockquote {
+    margin-left: 0em;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+        border-color: var(--tertiary);
+    }
+
+    i,
+    em {
+        font-weight: bold;
+    }
+
+    a {
+        color: var(--tertiary);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Definition lists
+dl {
+    border: solid var(--light);
+    border-radius: 8px;
+    border-style: dashed;
+    background-color: var(--misc_background);
+    padding: 8px 12px;
+}
+
+// Footnotes
+.footnotes p {
+    font-size: 0.92rem;
+    color: var(--darkgray);
+
+    i,
+    em {
+        color: var(--tertiary);
+        font-style: normal;
+    }
+}
+
+// Header
+dt {
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-family: var(--headerFont);
+    font-weight: bold;
+    line-height: 2.40em;
+    color: var(--misc_header);
+}
+
+dd {
+    // Body
+    font-family: var(--bodyFont);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--darkgray);
+    margin-right: 20px;
+}
+
+
 // Emphatize without bold or italics
 lg {
     color: var(--primary);
+}
+
+// Horizontal line
+hr {
+    width: 25%;
+    margin: 3em auto;
+    height: 2px;
+    border-radius: 1px;
+    border-width: 0;
+    color: var(--gray);
+    background-color: var(--gray);
 }

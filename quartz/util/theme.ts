@@ -4,8 +4,13 @@ export interface ColorScheme {
   gray: string
   darkgray: string
   dark: string
+  primary: string
   secondary: string
   tertiary: string
+  selection: string
+  misc_background: string
+  misc_background2: string
+  misc_header: string
   highlight: string
 }
 
@@ -40,8 +45,13 @@ ${stylesheet.join("\n\n")}
   --gray: ${theme.colors.lightMode.gray};
   --darkgray: ${theme.colors.lightMode.darkgray};
   --dark: ${theme.colors.lightMode.dark};
+  --primary: ${theme.colors.lightMode.primary};
   --secondary: ${theme.colors.lightMode.secondary};
   --tertiary: ${theme.colors.lightMode.tertiary};
+  --selection: ${theme.colors.lightMode.selection};
+  --misc_background: ${theme.colors.lightMode.misc_background};
+  --misc_background2: ${theme.colors.lightMode.misc_background2};
+  --misc_header: ${theme.colors.lightMode.misc_header};
   --highlight: ${theme.colors.lightMode.highlight};
 
   --headerFont: "${theme.typography.header}", ${DEFAULT_SANS_SERIF};
@@ -55,8 +65,13 @@ ${stylesheet.join("\n\n")}
   --gray: ${theme.colors.darkMode.gray};
   --darkgray: ${theme.colors.darkMode.darkgray};
   --dark: ${theme.colors.darkMode.dark};
+  --primary: ${theme.colors.darkMode.primary};
   --secondary: ${theme.colors.darkMode.secondary};
   --tertiary: ${theme.colors.darkMode.tertiary};
+  --selection: ${theme.colors.darkMode.selection};
+  --misc_background: ${theme.colors.darkMode.misc_background};
+  --misc_background2: ${theme.colors.darkMode.misc_background2};
+  --misc_header: ${theme.colors.darkMode.misc_header};
   --highlight: ${theme.colors.darkMode.highlight};
 }
 `
