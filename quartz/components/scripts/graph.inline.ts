@@ -176,7 +176,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       d.fy = null
     }
 
-    const noop = () => { }
+    const noop = () => {}
     return d3
       .drag<Element, NodeData>()
       .on("start", enableDrag ? dragstarted : noop)
@@ -217,7 +217,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       // highlight links
       linkNodes.transition().duration(200).attr("stroke", "var(--gray)").attr("stroke-width", 1)
 
-      const bigFont = fontSize * 1.3
+      const bigFont = fontSize * 1.5
 
       // show text for self
       const parent = this.parentNode as HTMLElement
@@ -227,7 +227,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
         .transition()
         .duration(200)
         .attr("opacityOld", d3.select(parent).select("text").style("opacity"))
-        .style("opacity", 0.9)
+        .style("opacity", 1)
         .style("font-size", bigFont + "em")
     })
     .on("mouseleave", function (_, d) {
@@ -243,7 +243,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
         .select("text")
         .transition()
         .duration(200)
-        .style('opacity', 0)
+        .style("opacity", d3.select(parent).select("text").attr("opacityOld"))
         .style("font-size", fontSize + "em")
     })
     // @ts-ignore
@@ -253,14 +253,11 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   const labels = graphNode
     .append("text")
     .attr("dx", 0)
-    .attr("dy", (d) => -nodeRadius(d) + 8 + "px")
+    .attr("dy", (d) => -nodeRadius(d) + "px")
     .attr("text-anchor", "middle")
     .text((d) => d.text)
-    .style("fill", "var(--darkgray)")
     .style("opacity", (opacityScale - 1) / 3.75)
     .style("pointer-events", "none")
-    .style("text-transform", "uppercase")
-    .style("font-family", "var(--headerFont") // Use custom font
     .style("font-size", fontSize + "em")
     .raise()
     // @ts-ignore

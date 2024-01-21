@@ -39,11 +39,11 @@ export default ((userOpts?: Partial<Options>) => {
               <li class="recent-li">
                 <div class="section">
                   <div class="desc">
-                    <p>
+                    <h3>
                       <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
                         {title}
                       </a>
-                    </p>
+                    </h3>
                   </div>
                   {page.dates && (
                     <p class="meta">

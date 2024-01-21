@@ -25,7 +25,7 @@ interface GraphOptions {
 const defaultOptions: GraphOptions = {
   localGraph: {
     drag: true,
-    zoom: false,
+    zoom: true,
     depth: 1,
     scale: 1.1,
     repelForce: 0.5,
@@ -38,7 +38,7 @@ const defaultOptions: GraphOptions = {
   },
   globalGraph: {
     drag: true,
-    zoom: false,
+    zoom: true,
     depth: -1,
     scale: 0.9,
     repelForce: 0.5,
@@ -57,7 +57,7 @@ export default ((opts?: GraphOptions) => {
     const globalGraph = { ...defaultOptions.globalGraph, ...opts?.globalGraph }
     return (
       <div class={`graph ${displayClass ?? ""}`}>
-        <h3>Topografía</h3>
+        <h3>Graph View</h3>
         <div class="graph-outer">
           <div id="graph-container" data-cfg={JSON.stringify(localGraph)}></div>
           <svg

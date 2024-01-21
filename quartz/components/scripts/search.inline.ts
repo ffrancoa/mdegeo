@@ -35,12 +35,12 @@ function highlight(searchTerm: string, text: string, trim?: boolean) {
   if (trim) {
     const includesCheck = (tok: string) =>
       tokenizedTerms.some((term) => tok.toLowerCase().startsWith(term.toLowerCase()))
-    const occurencesIndices = tokenizedText.map(includesCheck)
+    const occurrencesIndices = tokenizedText.map(includesCheck)
 
     let bestSum = 0
     let bestIndex = 0
     for (let i = 0; i < Math.max(tokenizedText.length - contextWindowWords, 0); i++) {
-      const window = occurencesIndices.slice(i, i + contextWindowWords)
+      const window = occurrencesIndices.slice(i, i + contextWindowWords)
       const windowSum = window.reduce((total, cur) => total + (cur ? 1 : 0), 0)
       if (windowSum >= bestSum) {
         bestSum = windowSum
@@ -66,8 +66,9 @@ function highlight(searchTerm: string, text: string, trim?: boolean) {
     })
     .join(" ")
 
-  return `${startIndex === 0 ? "" : "..."}${slice}${endIndex === tokenizedText.length - 1 ? "" : "..."
-    }`
+  return `${startIndex === 0 ? "" : "..."}${slice}${
+    endIndex === tokenizedText.length - 1 ? "" : "..."
+  }`
 }
 
 const encoder = (str: string) => str.toLowerCase().split(/([^a-z]|[^\x00-\x7F])/)
@@ -121,7 +122,10 @@ document.addEventListener("nav", async (e: unknown) => {
 
       // add "#" prefix for tag search
       if (searchBar) searchBar.value = "#"
-    } else if (e.key === "Enter") {
+    }
+
+    if (!container?.classList.contains("active")) return
+    else if (e.key === "Enter") {
       // If result has focus, navigate to that one, otherwise pick first result
       if (results?.contains(document.activeElement)) {
         const active = document.activeElement as HTMLInputElement
@@ -195,7 +199,7 @@ document.addEventListener("nav", async (e: unknown) => {
       const termLower = term.toLowerCase()
       let matching = tags.filter((str) => str.includes(termLower))
 
-      // Substract matching from original tags, then push difference
+      // Subtract matching from original tags, then push difference
       if (matching.length > 0) {
         let difference = tags.filter((x) => !matching.includes(x))
 
@@ -236,8 +240,8 @@ document.addEventListener("nav", async (e: unknown) => {
     removeAllChildren(results)
     if (finalResults.length === 0) {
       results.innerHTML = `<button class="result-card">
-                    <h3>Sin resultados.</h3>
-                    <p>¿Probamos con algo distinto?</p>
+                    <h3>No results.</h3>
+                    <p>Try another search term?</p>
                 </button>`
     } else {
       results.append(...finalResults.map(resultToHTML))

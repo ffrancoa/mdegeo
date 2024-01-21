@@ -426,7 +426,7 @@ export async function handleBuild(argv) {
         build(clientRefresh)
       })
   } else {
-    await build(() => { })
+    await build(() => {})
     ctx.dispose()
   }
 }
@@ -450,7 +450,7 @@ export async function handleUpdate(argv) {
   try {
     gitPull(UPSTREAM_NAME, QUARTZ_SOURCE_BRANCH)
   } catch {
-    console.log(chalk.red("An error occured above while pulling updates."))
+    console.log(chalk.red("An error occurred above while pulling updates."))
     await popContentFolder(contentFolder)
     return
   }
@@ -499,11 +499,10 @@ export async function handleSync(argv) {
       })
     }
 
-    const currentTimestamp = new Date().toLocaleString("en-GB")
-    // const currentTimestamp = new Date().toLocaleString("en-GB", {
-    //   dateStyle: "medium",
-    //   timeStyle: "short",
-    // })
+    const currentTimestamp = new Date().toLocaleString("en-US", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    })
     const commitMessage = argv.message ?? `Quartz sync: ${currentTimestamp}`
     spawnSync("git", ["add", "."], { stdio: "inherit" })
     spawnSync("git", ["commit", "-m", commitMessage], { stdio: "inherit" })
@@ -523,7 +522,7 @@ export async function handleSync(argv) {
     try {
       gitPull(ORIGIN_NAME, QUARTZ_SOURCE_BRANCH)
     } catch {
-      console.log(chalk.red("An error occured above while pulling updates."))
+      console.log(chalk.red("An error occurred above while pulling updates."))
       await popContentFolder(contentFolder)
       return
     }
