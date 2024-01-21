@@ -33,7 +33,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
         segments.push(timeTaken)
       }
 
-      return <p class={`content-meta ${displayClass ?? ""}`}>{segments.join(", ")}</p>
+      return <p class={`content-meta ${displayClass ?? ""}`}>Una memoria del {segments} 🍂</p>
     } else {
       return null
     }
@@ -41,8 +41,9 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
   ContentMetadata.css = `
   .content-meta {
-    margin-top: 0;
+    margin-top: 0.1em;
     color: var(--gray);
+    font-family: var(--bodyFont);
   }
   `
   return ContentMetadata
