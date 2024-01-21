@@ -57,7 +57,7 @@ h4 {
 tbody,
 li,
 p {
-    line-height: 1.5rem;
+    line-height: 1.55rem;
 }
 
 .page {
@@ -180,6 +180,7 @@ p.content-meta {
 // Tables
 .table-container {
     &>table {
+        margin: 0;
         padding: 1.5rem;
         width: 100%;
     }
@@ -235,7 +236,7 @@ figcaption {
 // Blockquotes
 blockquote {
     margin-left: 0em;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.2s ease;
 
     &:hover {
         border-color: var(--tertiary);
