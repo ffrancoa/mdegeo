@@ -27,6 +27,7 @@
     }
 }
 
+
 // Typography
 h1,
 h2,
@@ -68,6 +69,7 @@ p {
     }
 }
 
+
 // External Links
 a {
     display: inline;
@@ -83,16 +85,19 @@ a {
     }
 }
 
+
 // Selection
 ::selection {
     background: color-mix(in srgb, var(--selection) 75%, transparent);
     color: currentColor;
 }
 
+
 // Logo Hover
 text.logotitle:hover {
     fill: var(--secondary);
 }
+
 
 // Table of Contents
 div.toc {
@@ -111,6 +116,15 @@ div.toc {
         }
     }
 }
+
+ul.overflow,
+ol.overflow {
+
+    &:after {
+        opacity: 0;
+    }
+}
+
 
 // Breadcrumbs
 nav.breadcrumb-container {
@@ -134,7 +148,8 @@ nav.breadcrumb-container {
     }
 }
 
-// Recent
+
+// Recent Notes
 .recent-notes {
     margin: 0 0 1em;
 }
@@ -161,6 +176,7 @@ div.recent-notes>ul.recent-ul>li {
     display: none;
 }
 
+
 // Meta
 %metaBase {
     font-size: 0.95em;
@@ -177,6 +193,7 @@ p.content-meta {
     @extend %metaBase;
     margin-bottom: 1em;
 }
+
 
 // Tables
 .table-container {
@@ -206,6 +223,7 @@ td {
     font-size: 0.95rem;
 }
 
+
 // Images
 img {
     display: block;
@@ -217,6 +235,7 @@ img {
 
     filter: sepia(10%) grayscale(20%);
 }
+
 
 // Caption
 figcaption {
@@ -233,6 +252,7 @@ figcaption {
         }
     }
 }
+
 
 // Blockquotes
 blockquote {
@@ -259,6 +279,7 @@ blockquote {
     }
 }
 
+
 // Definition lists
 dl {
     border: solid var(--light);
@@ -267,6 +288,7 @@ dl {
     background-color: var(--misc_background);
     padding: 8px 12px;
 }
+
 
 // Footnotes
 .footnotes p {
@@ -279,6 +301,7 @@ dl {
         font-style: normal;
     }
 }
+
 
 // Header
 dt {
@@ -300,10 +323,11 @@ dd {
 }
 
 
-// Emphatize without bold or italics
+// Emphasis
 lg {
     color: var(--primary);
 }
+
 
 // Horizontal line
 hr {
