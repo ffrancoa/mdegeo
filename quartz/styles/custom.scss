@@ -86,6 +86,22 @@ a {
 }
 
 
+// Superscripts
+sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
+
+    /* The following rules (or similar) likely come from browser 
+     * style and are not needed
+     */
+    a {
+        color: var(--primary);
+    }
+}
+
+
 // Selection
 ::selection {
     background: color-mix(in srgb, var(--selection) 75%, transparent);
@@ -289,11 +305,7 @@ blockquote {
     }
 
     a {
-        color: var(--tertiary);
-
-        &:hover {
-            text-decoration: underline;
-        }
+        color: var(--midgray);
     }
 }
 
