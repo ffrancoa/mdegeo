@@ -257,7 +257,7 @@ figcaption {
 // Blockquotes
 blockquote {
     margin: 1rem 2em 1em 0em;
-    border-left: 3px solid var(--secondary);
+    border-left: 3px solid var(--gray);
     padding-left: 1em;
     transition: border-color 0.2s ease;
 
@@ -265,9 +265,27 @@ blockquote {
         border-color: var(--tertiary);
     }
 
-    i,
-    em {
-        font-weight: bold;
+    p,
+    li,
+    span {
+        color: var(--midgray);
+    }
+
+    p {
+        margin-block-end: 0.5em;
+    }
+
+    ol {
+        margin-block-start: 0.5em;
+    }
+
+    p>strong {
+        color: var(--midgray) !important;
+
+        &:hover {
+            color: var(--tertiary) !important;
+            transition: color 0.2s ease;
+        }
     }
 
     a {
