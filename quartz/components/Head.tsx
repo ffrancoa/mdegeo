@@ -21,10 +21,11 @@ export default (() => {
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Proyecto que nace del deseo de difundir la Ingeniería Geotécnica — y otras ramas relacionadas — hacia cualquier persona con un interés por conocer más de este apasionante mundo de las Ciencias Geológicas." />
         <meta property="og:title" content={title} />
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content={ogUrl} />
-        <meta property="og:description" content={description} />
+        <meta property="og:description" content="Proyecto que nace del deseo de difundir la Ingeniería Geotécnica — y otras ramas relacionadas — hacia cualquier persona con un interés por conocer más de este apasionante mundo de las Ciencias Geológicas." />
         <meta property="og:image" content={ogImagePath} />
         <meta property="og:width" content="1200" />
         <meta property="og:height" content="675" />
