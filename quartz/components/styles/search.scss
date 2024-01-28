@@ -94,17 +94,19 @@
           border: 1px solid var(--lightgray);
           border-bottom: none;
           width: 100%;
+          display: block;
+          box-sizing: border-box;
 
           // normalize card props
           font-family: inherit;
           font-size: 100%;
-          font-weight: inherit;
           line-height: 1.15;
           margin: 0;
           text-transform: none;
           text-align: left;
           background: var(--light);
           outline: none;
+          font-weight: inherit;
 
           & .highlight {
             color: var(--secondary);

@@ -31,6 +31,7 @@ import {
   cacheFile,
   cwd,
 } from "./constants.js"
+import { tree } from "d3"
 
 /**
  * Handles `npx quartz create`
@@ -258,6 +259,7 @@ export async function handleBuild(argv) {
               },
               write: false,
               bundle: true,
+              minify: true,
               platform: "browser",
               format: "esm",
             })
@@ -426,7 +428,7 @@ export async function handleBuild(argv) {
         build(clientRefresh)
       })
   } else {
-    await build(() => {})
+    await build(() => { })
     ctx.dispose()
   }
 }
