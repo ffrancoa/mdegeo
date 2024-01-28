@@ -2,7 +2,7 @@
 
 Todos los archivos de texto plano ubicados dentro de la carpeta  `content/` están licenciados bajo [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.es). Los requisitos de atribucións sólo se cumplen cuando el siguiente mensaje es mostrado al inicio o al término del contenido empleado:
 
-> `Artículo publicado originalmente en <a href="https://mdegeo.com/">Memorias de Geotecnia</a>.`
+> Artículo publicado originalmente en [Memorias de Geotecnia](https://mdegeo.com/)
 
 # Imágenes
 
