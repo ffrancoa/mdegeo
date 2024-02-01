@@ -120,6 +120,7 @@ function addGlobalPageResources(
     componentResources.afterDOMLoaded.push(`
       const umamiScript = document.createElement("script")
       umamiScript.src = "https://analytics.umami.is/script.js"
+      umamiScript.src = cfg.analytics.host ?? "https://analytics.umami.is/script.js"
       umamiScript.setAttribute("data-website-id", "${cfg.analytics.websiteId}")
       umamiScript.async = true
 
