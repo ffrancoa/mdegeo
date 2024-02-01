@@ -1,11 +1,12 @@
 import { pathToRoot } from "../util/path"
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import { classNames } from "../util/lang"
 
 function PageTitle({ fileData, cfg, displayClass }: QuartzComponentProps) {
   const title = cfg?.pageTitle ?? "Untitled Quartz"
   const baseDir = pathToRoot(fileData.slug!)
   return (
-    <h1 class={`page-title ${displayClass ?? ""}`}>
+    <h1 class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
         <svg width="189" height="96" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><defs><clipPath id="clip0"><rect x="405" y="278" width="189" height="96" /></clipPath></defs><g clip-path="url(#clip0)" transform="translate(-405 -278)">
           <path d="M136.068 71.1644C136.068 66.6533 139.703 62.9964 144.187 62.9964 148.672 62.9964 152.307 66.6533 152.307 71.1644 152.307 75.6755 148.672 79.3325 144.187 79.3325 139.703 79.3325 136.068 75.6755 136.068 71.1644Z" fill="var(--gray)" fill-rule="evenodd" transform="matrix(1.00189 0 0 1 331.006 215.004)" />
