@@ -6,11 +6,11 @@ Todos los archivos de texto plano ubicados dentro de la carpeta  `content/` est�
 
 # Imágenes
 
-Todas las imágenes ubicadas dentro de `content/`, a excepción de las fotografías, son propiedad de Francesco A. Franco. Para este último caso la autoría de cada una es atribuida de manera explícita en el mismo sitio web.
+Todas las imágenes ubicadas dentro de `content/`, a excepción de las fotografías, son propiedad de Francesco A. Franco Alva. En el caso de las fotografías, la autoría de cada una es atribuida de manera explícita en el mismo sitio web.
 
 ---
 
-Aquellos archivos no mencionados anteriores, incluyendo el código de la página, están licenciados bajo la [MIT License](https://opensource.org/license/mit/).
+Aquellos archivos no mencionados anteriores, incluyendo el código de la página, están licenciados bajo la licencia [MIT License](https://opensource.org/license/mit/).
 
 ## MIT License
 
