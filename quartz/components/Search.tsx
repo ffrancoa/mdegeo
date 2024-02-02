@@ -4,12 +4,22 @@ import style from "./styles/search.scss"
 import script from "./scripts/search.inline"
 import { classNames } from "../util/lang"
 
-export default (() => {
+export interface SearchOptions {
+  enablePreview: boolean
+}
+
+const defaultOptions: SearchOptions = {
+  enablePreview: true,
+}
+
+export default ((userOpts?: Partial<SearchOptions>) => {
   function Search({ displayClass }: QuartzComponentProps) {
+    const opts = { ...defaultOptions, ...userOpts }
+
     return (
       <div class={classNames(displayClass, "search")}>
         <div id="search-icon">
-          <p>Buscar...</p>
+          <p>Buscar ...</p>
           <div></div>
           <svg
             tabIndex={0}
@@ -33,10 +43,10 @@ export default (() => {
               id="search-bar"
               name="search"
               type="text"
-              aria-label="Escribe algo para iniciar una búsqueda."
+              aria-label="Empieza a escribir para iniciar una búsqueda."
               placeholder="Escribe algo para iniciar una búsqueda."
             />
-            <div id="results-container"></div>
+            <div id="search-layout" data-preview={opts.enablePreview}></div>
           </div>
         </div>
       </div>

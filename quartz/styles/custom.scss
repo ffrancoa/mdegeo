@@ -75,12 +75,11 @@ a {
     display: inline;
     text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
-    }
+    &.external {
 
-    &.internal {
-        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
 
     }
 }
@@ -241,7 +240,7 @@ td {
 img {
     display: block;
     max-width: 95%;
-    border-radius: 10px;
+    border-radius: 8px;
     margin-top: 1.5rem;
     margin-left: auto;
     margin-right: auto;
@@ -317,7 +316,6 @@ dl {
 
 /// Header
 dt {
-    text-decoration: underline;
     text-transform: uppercase;
     font-family: var(--headerFont);
     font-size: 0.95rem;
@@ -368,7 +366,7 @@ hr {
 
 // Callouts
 .callout {
-    border-radius: 6px;
+    border-radius: 8px;
     transition: border-color 0.3s ease;
     margin-left: auto;
     margin-right: auto;
