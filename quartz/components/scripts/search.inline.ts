@@ -227,7 +227,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
 
     // If search is active, then we will render the first result and display accordingly
     if (!container?.classList.contains("active")) return
-    else if (e.key === "Enter") {
+    if (e.key === "Enter") {
       // If result has focus, navigate to that one, otherwise pick first result
       if (results?.contains(document.activeElement)) {
         const active = document.activeElement as HTMLInputElement
@@ -249,9 +249,9 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
           : (document.activeElement as HTMLInputElement | null)
         const prevResult = currentResult?.previousElementSibling as HTMLInputElement | null
         currentResult?.classList.remove("focus")
-        await displayPreview(prevResult)
         prevResult?.focus()
-        currentHover = prevResult
+        if (prevResult) currentHover = prevResult
+        await displayPreview(prevResult)
       }
     } else if (e.key === "ArrowDown" || e.key === "Tab") {
       e.preventDefault()
@@ -263,19 +263,9 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
           : (document.getElementsByClassName("result-card")[0] as HTMLInputElement | null)
         const secondResult = firstResult?.nextElementSibling as HTMLInputElement | null
         firstResult?.classList.remove("focus")
-        await displayPreview(secondResult)
         secondResult?.focus()
-        currentHover = secondResult
-      } else {
-        // If an element in results-container already has focus, focus next one
-        const active = currentHover
-          ? currentHover
-          : (document.activeElement as HTMLInputElement | null)
-        active?.classList.remove("focus")
-        const nextResult = active?.nextElementSibling as HTMLInputElement | null
-        await displayPreview(nextResult)
-        nextResult?.focus()
-        currentHover = nextResult
+        if (secondResult) currentHover = secondResult
+        await displayPreview(secondResult)
       }
     }
   }
@@ -319,38 +309,21 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     itemTile.href = resolveUrl(slug).toString()
     itemTile.innerHTML = `<h3>${title}</h3>${htmlTags}<p class="preview">${content}</p>`
 
+    const handler = (event: MouseEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+      hideSearch()
+    }
+
     async function onMouseEnter(ev: MouseEvent) {
       if (!ev.target) return
-      currentHover?.classList.remove("focus")
-      currentHover?.blur()
       const target = ev.target as HTMLInputElement
       await displayPreview(target)
-      currentHover = target
-      currentHover.classList.add("focus")
     }
 
-    async function onMouseLeave(ev: MouseEvent) {
-      if (!ev.target) return
-      const target = ev.target as HTMLElement
-      target.classList.remove("focus")
-    }
-
-    const events = [
-      ["mouseenter", onMouseEnter],
-      ["mouseleave", onMouseLeave],
-      [
-        "click",
-        (event: MouseEvent) => {
-          if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
-          hideSearch()
-        },
-      ],
-    ] as const
-
-    events.forEach(([event, handler]) => {
-      itemTile.addEventListener(event, handler)
-      window.addCleanup(() => itemTile.removeEventListener(event, handler))
-    })
+    itemTile.addEventListener("mouseenter", onMouseEnter)
+    window.addCleanup(() => itemTile.removeEventListener("mouseenter", onMouseEnter))
+    itemTile.addEventListener("click", handler)
+    window.addCleanup(() => itemTile.removeEventListener("click", handler))
 
     return itemTile
   }
@@ -361,9 +334,9 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     removeAllChildren(results)
     if (finalResults.length === 0) {
       results.innerHTML = `<a class="result-card no-match">
-          <h3>No results.</h3>
-          <p>Try another search term?</p>
-      </a>`
+      <h3>No results.</h3>
+      <p>Try another search term?</p>
+  </a>`
     } else {
       results.append(...finalResults.map(resultToHTML))
     }
@@ -404,12 +377,11 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   async function displayPreview(el: HTMLElement | null) {
     if (!searchLayout || !enablePreview || !el || !preview) return
     const slug = el.id as FullSlug
-    el.classList.add("focus")
-    previewInner = document.createElement("div")
-    previewInner.classList.add("preview-inner")
     const innerDiv = await fetchContent(slug).then((contents) =>
       contents.flatMap((el) => [...highlightHTML(currentSearchTerm, el as HTMLElement).children]),
     )
+    previewInner = document.createElement("div")
+    previewInner.classList.add("preview-inner")
     previewInner.append(...innerDiv)
     preview.replaceChildren(previewInner)
 
@@ -417,7 +389,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     const highlights = [...preview.querySelectorAll(".highlight")].sort(
       (a, b) => b.innerHTML.length - a.innerHTML.length,
     )
-    highlights[0]?.scrollIntoView()
+    highlights[0]?.scrollIntoView({ block: "start" })
   }
 
   async function onType(e: HTMLElementEventMap["input"]) {
@@ -463,8 +435,8 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   searchBar?.addEventListener("input", onType)
   window.addCleanup(() => searchBar?.removeEventListener("input", onType))
 
-  await fillDocument(data)
   registerEscapeHandler(container, hideSearch)
+  await fillDocument(data)
 })
 
 /**
@@ -474,13 +446,18 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
  */
 async function fillDocument(data: { [key: FullSlug]: ContentDetails }) {
   let id = 0
+  const promises: Array<Promise<unknown>> = []
   for (const [slug, fileData] of Object.entries<ContentDetails>(data)) {
-    await index.addAsync(id++, {
-      id,
-      slug: slug as FullSlug,
-      title: fileData.title,
-      content: fileData.content,
-      tags: fileData.tags,
-    })
+    promises.push(
+      index.addAsync(id++, {
+        id,
+        slug: slug as FullSlug,
+        title: fileData.title,
+        content: fileData.content,
+        tags: fileData.tags,
+      }),
+    )
   }
+
+  return await Promise.all(promises)
 }
