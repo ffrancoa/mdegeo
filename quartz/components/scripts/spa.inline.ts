@@ -13,7 +13,7 @@ const isLocalUrl = (href: string) => {
     if (window.location.origin === url.origin) {
       return true
     }
-  } catch (e) {}
+  } catch (e) { }
   return false
 }
 
@@ -39,6 +39,9 @@ function notifyNav(url: FullSlug) {
   document.dispatchEvent(event)
 }
 
+const cleanupFns: Set<(...args: any[]) => void> = new Set()
+window.addCleanup = (fn) => cleanupFns.add(fn)
+
 let p: DOMParser
 async function navigate(url: URL, isBack: boolean = false) {
   p = p || new DOMParser()
@@ -56,6 +59,10 @@ async function navigate(url: URL, isBack: boolean = false) {
     })
 
   if (!contents) return
+
+  // cleanup old
+  cleanupFns.forEach((fn) => fn())
+  cleanupFns.clear()
 
   const html = p.parseFromString(contents, "text/html")
   normalizeRelativeURLs(html, url)

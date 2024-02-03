@@ -13,26 +13,31 @@ interface Item {
 
 // Can be expanded with things like "term" in the future
 type SearchType = "basic" | "tags"
-
-// Current searchType
 let searchType: SearchType = "basic"
-// Current search term // TODO: exact match
 let currentSearchTerm: string = ""
-// index for search
 let index: FlexSearch.Document<Item> | undefined = undefined
+const p = new DOMParser()
+const encoder = (str: string) => str.toLowerCase().split(/([^a-z]|[^\x00-\x7F])/)
 
+const fetchContentCache: Map<FullSlug, Element[]> = new Map()
 const contextWindowWords = 30
 const numSearchResults = 8
 const numTagResults = 5
 
-const tokenizeTerm = (term: string) =>
-  term
-    .split(/\s+/)
-    .filter((t) => t !== "")
-    .sort((a, b) => b.length - a.length)
+const tokenizeTerm = (term: string) => {
+  const tokens = term.split(/\s+/).filter((t) => t.trim() !== "")
+
+  const tokenLen = tokens.length
+  if (tokenLen > 1) {
+    for (let i = 1; i < tokenLen; i++) {
+      tokens.push(tokens.slice(0, i + 1).join(" "))
+    }
+  }
+
+  return tokens.sort((a, b) => b.length - a.length) // always highlight longest terms first
+}
 
 function highlight(searchTerm: string, text: string, trim?: boolean) {
-  // try to highlight longest tokens first
   const tokenizedTerms = tokenizeTerm(searchTerm)
   let tokenizedText = text.split(/\s+/).filter((t) => t !== "")
 
@@ -70,7 +75,6 @@ function highlight(searchTerm: string, text: string, trim?: boolean) {
       }
       return tok
     })
-    .slice(startIndex, endIndex + 1)
     .join(" ")
 
   return `${startIndex === 0 ? "" : "..."}${slice}${endIndex === tokenizedText.length - 1 ? "" : "..."
@@ -78,7 +82,6 @@ function highlight(searchTerm: string, text: string, trim?: boolean) {
 }
 
 function highlightHTML(searchTerm: string, el: HTMLElement) {
-  // try to highlight longest tokens first
   const p = new DOMParser()
   const tokenizedTerms = tokenizeTerm(searchTerm)
   const html = p.parseFromString(el.innerHTML, "text/html")
@@ -90,37 +93,34 @@ function highlightHTML(searchTerm: string, el: HTMLElement) {
     return span
   }
 
-  const highlightTextNodes = (node: Node) => {
+  const highlightTextNodes = (node: Node, term: string) => {
     if (node.nodeType === Node.TEXT_NODE) {
-      let nodeText = node.nodeValue || ""
-      tokenizedTerms.forEach((term) => {
-        const regex = new RegExp(term.toLowerCase(), "gi")
-        const matches = nodeText.match(regex)
-        const spanContainer = document.createElement("span")
-        let lastIndex = 0
-        matches?.forEach((match) => {
-          const matchIndex = nodeText.indexOf(match, lastIndex)
-          spanContainer.appendChild(document.createTextNode(nodeText.slice(lastIndex, matchIndex)))
-          spanContainer.appendChild(createHighlightSpan(match))
-          lastIndex = matchIndex + match.length
-        })
-        spanContainer.appendChild(document.createTextNode(nodeText.slice(lastIndex)))
-        node.parentNode?.replaceChild(spanContainer, node)
-      })
+      const nodeText = node.nodeValue ?? ""
+      const regex = new RegExp(term.toLowerCase(), "gi")
+      const matches = nodeText.match(regex)
+      if (!matches || matches.length === 0) return
+      const spanContainer = document.createElement("span")
+      let lastIndex = 0
+      for (const match of matches) {
+        const matchIndex = nodeText.indexOf(match, lastIndex)
+        spanContainer.appendChild(document.createTextNode(nodeText.slice(lastIndex, matchIndex)))
+        spanContainer.appendChild(createHighlightSpan(match))
+        lastIndex = matchIndex + match.length
+      }
+      spanContainer.appendChild(document.createTextNode(nodeText.slice(lastIndex)))
+      node.parentNode?.replaceChild(spanContainer, node)
     } else if (node.nodeType === Node.ELEMENT_NODE) {
-      Array.from(node.childNodes).forEach(highlightTextNodes)
+      if ((node as HTMLElement).classList.contains("highlight")) return
+      Array.from(node.childNodes).forEach((child) => highlightTextNodes(child, term))
     }
   }
 
-  highlightTextNodes(html.body)
+  for (const term of tokenizedTerms) {
+    highlightTextNodes(html.body, term)
+  }
+
   return html.body
 }
-
-const p = new DOMParser()
-const encoder = (str: string) => str.toLowerCase().split(/([^a-z]|[^\x00-\x7F])/)
-let prevShortcutHandler: ((e: HTMLElementEventMap["keydown"]) => void) | undefined = undefined
-
-const fetchContentCache: Map<FullSlug, Element[]> = new Map()
 
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const currentSlug = e.detail.url
@@ -144,13 +144,13 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   let previewInner: HTMLDivElement | undefined = undefined
   const results = document.createElement("div")
   results.id = "results-container"
-  results.style.flexBasis = enablePreview ? "30%" : "100%"
+  results.style.flexBasis = enablePreview ? "min(30%, 450px)" : "100%"
   appendLayout(results)
 
   if (enablePreview) {
     preview = document.createElement("div")
     preview.id = "preview-container"
-    preview.style.flexBasis = "70%"
+    preview.style.flexBasis = "100%"
     appendLayout(preview)
   }
 
@@ -237,7 +237,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
       e.preventDefault()
       // The results should already been focused, so we need to find the next one.
       // The activeElement is the search bar, so we need to find the first result and focus it.
-      if (!results?.contains(document.activeElement)) {
+      if (document.activeElement === searchBar || currentHover !== null) {
         const firstResult = currentHover
           ? currentHover
           : (document.getElementsByClassName("result-card")[0] as HTMLInputElement | null)
@@ -397,6 +397,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
         removeAllChildren(preview as HTMLElement)
       } else {
         firstChild.classList.add("focus")
+        currentHover = firstChild as HTMLInputElement
         await displayPreview(firstChild)
       }
     }
@@ -494,16 +495,12 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     await displayResults(finalResults)
   }
 
-  if (prevShortcutHandler) {
-    document.removeEventListener("keydown", prevShortcutHandler)
-  }
-
   document.addEventListener("keydown", shortcutHandler)
-  prevShortcutHandler = shortcutHandler
-  searchIcon?.removeEventListener("click", () => showSearch("basic"))
+  window.addCleanup(() => document.removeEventListener("keydown", shortcutHandler))
   searchIcon?.addEventListener("click", () => showSearch("basic"))
-  searchBar?.removeEventListener("input", onType)
+  window.addCleanup(() => searchIcon?.removeEventListener("click", () => showSearch("basic")))
   searchBar?.addEventListener("input", onType)
+  window.addCleanup(() => searchBar?.removeEventListener("input", onType))
 
   // setup index if it hasn't been already
   if (!index) {
@@ -544,13 +541,12 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
 async function fillDocument(index: FlexSearch.Document<Item, false>, data: any) {
   let id = 0
   for (const [slug, fileData] of Object.entries<ContentDetails>(data)) {
-    await index.addAsync(id, {
+    await index.addAsync(id++, {
       id,
       slug: slug as FullSlug,
       title: fileData.title,
       content: fileData.content,
       tags: fileData.tags,
     })
-    id++
   }
 }

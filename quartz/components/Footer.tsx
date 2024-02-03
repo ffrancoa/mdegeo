@@ -13,7 +13,7 @@ export default ((opts?: Options) => {
     return (
       <footer class={`${displayClass ?? ""}`}>
         <hr />
-        <p style="text-align:center">🌕<br></br>Francesco Franco, © {year}</p>
+        <p style="text-align:center">🌙<br></br>Francesco Franco, © {year}</p>
       </footer>
     )
   }
