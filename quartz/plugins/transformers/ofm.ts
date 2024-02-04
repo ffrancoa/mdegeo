@@ -74,6 +74,17 @@ const calloutMapping = {
   cite: "quote",
 } as const
 
+const arrowMapping: Record<string, string> = {
+  "->": "&rarr;",
+  "-->": "&rArr;",
+  "=>": "&rArr;",
+  "==>": "&rArr;",
+  "<-": "&larr;",
+  "<--": "&lArr;",
+  "<=": "&lArr;",
+  "<==": "&lArr;",
+}
+
 function canonicalizeCallout(calloutName: string): keyof typeof calloutMapping {
   const normalizedCallout = calloutName.toLowerCase() as keyof typeof calloutMapping
   // if callout is not recognized, make it a custom one
@@ -82,7 +93,7 @@ function canonicalizeCallout(calloutName: string): keyof typeof calloutMapping {
 
 export const externalLinkRegex = /^https?:\/\//i
 
-export const arrowRegex = new RegExp(/-{1,2}>/, "g")
+export const arrowRegex = new RegExp(/(-{1,2}>|={1,2}>|<-{1,2}|<={1,2})/, "g")
 
 // !?                -> optional embedding
 // \[\[              -> open brace
@@ -270,10 +281,12 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options> 
           if (opts.parseArrows) {
             replacements.push([
               arrowRegex,
-              (_value: string, ..._capture: string[]) => {
+              (value: string, ..._capture: string[]) => {
+                const maybeArrow = arrowMapping[value]
+                if (maybeArrow === undefined) return SKIP
                 return {
                   type: "html",
-                  value: `<span>&rarr;</span>`,
+                  value: `<span>${maybeArrow}</span>`,
                 }
               },
             ])
@@ -289,8 +302,9 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options> 
                 }
 
                 tag = slugTag(tag)
-                if (file.data.frontmatter?.tags?.includes(tag)) {
-                  file.data.frontmatter.tags.push(tag)
+                if (file.data.frontmatter) {
+                  const noteTags = file.data.frontmatter.tags ?? []
+                  file.data.frontmatter.tags = [...new Set([...noteTags, tag])]
                 }
 
                 return {
@@ -381,14 +395,17 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options> 
                 const calloutType = canonicalizeCallout(typeString.toLowerCase())
                 const collapse = collapseChar === "+" || collapseChar === "-"
                 const defaultState = collapseChar === "-" ? "collapsed" : "expanded"
-                const titleContent =
-                  match.input.slice(calloutDirective.length).trim() || capitalize(calloutType)
+                const titleContent = match.input.slice(calloutDirective.length).trim()
+                const useDefaultTitle = titleContent === "" && restOfTitle.length === 0
                 const titleNode: Paragraph = {
                   type: "paragraph",
-                  children:
-                    restOfTitle.length === 0
-                      ? [{ type: "text", value: titleContent + " " }]
-                      : restOfTitle,
+                  children: [
+                    {
+                      type: "text",
+                      value: useDefaultTitle ? capitalize(calloutType) : titleContent + " ",
+                    },
+                    ...restOfTitle,
+                  ],
                 }
                 const title = mdastToHtml(titleNode)
 
