@@ -1,11 +1,13 @@
+import { i18n } from "../i18n/i18next"
 import { FullSlug, _stripSlashes, joinSegments, pathToRoot } from "../util/path"
 import { JSResourceToScriptElement } from "../util/resources"
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
 export default (() => {
   function Head({ cfg, fileData, externalResources }: QuartzComponentProps) {
-    const title = fileData.frontmatter?.title ?? "Untitled"
-    const description = fileData.description?.trim() ?? "No description provided"
+    const title = fileData.frontmatter?.title ?? i18n(cfg.locale, "head.untitled")
+    const description =
+      fileData.description?.trim() ?? i18n(cfg.locale, "head.noDescriptionProvided")
     const { css, js } = externalResources
 
     const url = new URL(`https://${cfg.baseUrl ?? "example.com"}`)
@@ -22,6 +24,7 @@ export default (() => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Proyecto que nace del deseo de difundir la Ingeniería Geotécnica — y otras ramas relacionadas — hacia cualquier persona con un interés por conocer más de este apasionante mundo de las Ciencias Geológicas." />
+        <meta name="generator" content="Quartz" />
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={ogUrl} />
@@ -30,8 +33,6 @@ export default (() => {
         <meta property="og:width" content="1200" />
         <meta property="og:height" content="675" />
         <link rel="icon" href={iconPath} />
-        <meta name="description" content={description} />
-        <meta name="generator" content="Quartz" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         {css.map((href) => (
