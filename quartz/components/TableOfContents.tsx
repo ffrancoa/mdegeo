@@ -2,7 +2,7 @@ import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import legacyStyle from "./styles/legacyToc.scss"
 import modernStyle from "./styles/toc.scss"
 import { classNames } from "../util/lang"
-import { i18n } from "../i18n/i18next"
+import { i18n } from "../i18n"
 
 // @ts-ignore
 import script from "./scripts/toc.inline"
@@ -23,7 +23,7 @@ function TableOfContents({ fileData, displayClass, cfg }: QuartzComponentProps) 
   return (
     <div class={classNames(displayClass, "toc")}>
       <button type="button" id="toc" class={fileData.collapseToc ? "collapsed" : ""}>
-        <h3>{i18n(cfg.locale, "tableOfContent")}</h3>
+        <h3>{i18n(cfg.locale).components.tableOfContents.title}</h3>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -64,7 +64,7 @@ function LegacyTableOfContents({ fileData, cfg }: QuartzComponentProps) {
   return (
     <details id="toc" open={!fileData.collapseToc}>
       <summary>
-        <h3>{i18n(cfg.locale, "tableOfContent")}</h3>
+        <h3>{i18n(cfg.locale).components.tableOfContents.title}</h3>
       </summary>
       <ul>
         {fileData.toc.map((tocEntry) => (
