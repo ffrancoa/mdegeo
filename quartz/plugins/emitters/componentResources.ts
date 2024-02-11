@@ -1,3 +1,4 @@
+
 import { FilePath, FullSlug, joinSegments } from "../../util/path"
 import { QuartzEmitterPlugin } from "../types"
 
@@ -172,6 +173,24 @@ export const ComponentResources: QuartzEmitterPlugin<Options> = (opts?: Partial<
     name: "ComponentResources",
     getQuartzComponents() {
       return []
+    },
+    async getDependencyGraph(ctx, content, _resources) {
+      // This emitter adds static resources to the `resources` parameter. One
+      // important resource this emitter adds is the code to start a websocket
+      // connection and listen to rebuild messages, which triggers a page reload.
+      // The resources parameter with the reload logic is later used by the
+      // ContentPage emitter while creating the final html page. In order for
+      // the reload logic to be included, and so for partial rebuilds to work,
+      // we need to run this emitter for all markdown files.
+      const graph = new DepGraph<FilePath>()
+
+      for (const [_tree, file] of content) {
+        const sourcePath = file.data.filePath!
+        const slug = file.data.slug!
+        graph.addEdge(sourcePath, joinSegments(ctx.argv.output, slug + ".html") as FilePath)
+      }
+
+      return graph
     },
     async emit(ctx, _content, resources): Promise<FilePath[]> {
       const promises: Promise<FilePath>[] = []
