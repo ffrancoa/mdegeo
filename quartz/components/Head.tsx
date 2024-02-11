@@ -33,8 +33,12 @@ export default (() => {
         <meta property="og:width" content="1200" />
         <meta property="og:height" content="675" />
         <link rel="icon" href={iconPath} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        {cfg.theme.cdnCaching && (
+          <>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+          </>
+        )}
         {css.map((href) => (
           <link key={href} href={href} rel="stylesheet" type="text/css" spa-preserve />
         ))}

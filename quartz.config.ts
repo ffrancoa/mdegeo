@@ -14,6 +14,7 @@ const config: QuartzConfig = {
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
     theme: {
+      cdnCaching: true,
       typography: {
         header: "Lexend Mega", // 1. Rethink Sans 2. Young Serif 3. DM Serif Display
         body: "Lexend", // 1. DM Sans 2. Aleo
