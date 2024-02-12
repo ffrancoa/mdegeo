@@ -19,15 +19,15 @@ interface BreadcrumbOptions {
    */
   rootName: string
   /**
-   * wether to look up frontmatter title for folders (could cause performance problems with big vaults)
+   * Whether to look up frontmatter title for folders (could cause performance problems with big vaults)
    */
   resolveFrontmatterTitle: boolean
   /**
-   * Wether to display breadcrumbs on root `index.md`
+   * Whether to display breadcrumbs on root `index.md`
    */
   hideOnRoot: boolean
   /**
-   * Wether to display the current page in the breadcrumbs.
+   * Whether to display the current page in the breadcrumbs.
    */
   showCurrentPage: boolean
 }
@@ -68,13 +68,9 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
       folderIndex = new Map()
       // construct the index for the first time
       for (const file of allFiles) {
-        if (file.slug?.endsWith("index")) {
-          const folderParts = file.slug?.split("/")
-          if (folderParts) {
-            // 2nd last to exclude the /index
-            const folderName = folderParts[folderParts?.length - 2]
-            folderIndex.set(folderName, file)
-          }
+        const folderParts = file.slug?.split("/")
+        if (folderParts?.at(-1) === "index") {
+          folderIndex.set(folderParts.slice(0, -1).join("/"), file)
         }
       }
     }
@@ -88,7 +84,7 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
         let curPathSegment = slugParts[i]
 
         // Try to resolve frontmatter folder title
-        const currentFile = folderIndex?.get(curPathSegment)
+        const currentFile = folderIndex?.get(slugParts.slice(0, i + 1).join("/"))
         if (currentFile) {
           const title = currentFile.frontmatter!.title
           if (title !== "index") {
@@ -105,13 +101,14 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
       }
 
       // Add current file to crumb (can directly use frontmatter title)
-      if (options.showCurrentPage && slugParts.at(-1) === "") {
+      if (options.showCurrentPage && slugParts.at(-1) !== "index") {
         crumbs.push({
           displayName: fileData.frontmatter!.title,
           path: "",
         })
       }
     }
+
     return (
       <nav class={classNames(displayClass, "breadcrumb-container")} aria-label="breadcrumbs">
         {crumbs.map((crumb, index) => (
