@@ -102,8 +102,12 @@ sup {
 
 
 // Logo Hover
-text.logotitle:hover {
-    fill: var(--secondary);
+text.logotitle {
+    transition: fill 0.1s ease;
+
+    &:hover {
+        fill: var(--secondary);
+    }
 }
 
 
