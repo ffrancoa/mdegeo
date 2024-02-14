@@ -1,4 +1,4 @@
-import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import style from "./styles/footer.scss"
 
 interface Options {
@@ -6,7 +6,7 @@ interface Options {
 }
 
 export default ((opts?: Options) => {
-  function Footer({ displayClass }: QuartzComponentProps) {
+  const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear()
     const links = opts?.links ?? []
     return (

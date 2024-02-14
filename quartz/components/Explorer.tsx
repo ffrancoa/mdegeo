@@ -1,4 +1,4 @@
-import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import explorerStyle from "./styles/explorer.scss"
 
 // @ts-ignore
@@ -76,7 +76,12 @@ export default ((userOpts?: Partial<Options>) => {
     jsonTree = JSON.stringify(folders)
   }
 
-  function Explorer({ cfg, allFiles, displayClass, fileData }: QuartzComponentProps) {
+  const Explorer: QuartzComponent = ({
+    cfg,
+    allFiles,
+    displayClass,
+    fileData,
+  }: QuartzComponentProps) => {
     constructFileTree(allFiles)
     return (
       <div class={classNames(displayClass, "explorer")}>
