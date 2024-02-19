@@ -22,6 +22,12 @@ export default (() => {
       <head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        {cfg.theme.cdnCaching && (
+          <>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+          </>
+        )}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Proyecto que nace del deseo de difundir la Ingeniería Geotécnica — y otras ramas relacionadas — hacia cualquier persona con un interés por conocer más de este apasionante mundo de las Ciencias Geológicas." />
         <meta name="generator" content="Quartz" />
@@ -33,12 +39,6 @@ export default (() => {
         <meta property="og:width" content="1200" />
         <meta property="og:height" content="675" />
         <link rel="icon" href={iconPath} />
-        {cfg.theme.cdnCaching && (
-          <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-          </>
-        )}
         {css.map((href) => (
           <link key={href} href={href} rel="stylesheet" type="text/css" spa-preserve />
         ))}
