@@ -204,6 +204,7 @@ export function renderPage(
   )
 
   const lang = componentData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
+
   const doc = (
     <html lang={lang}>
       <Head {...componentData} />
@@ -219,9 +220,8 @@ export function renderPage(
                   ))}
                 </Header>
                 <div class="popover-hint">
-                  {beforeBody.map((BodyComponent) => (
-                    <BodyComponent {...componentData} />
-                  ))}
+                  {slug !== "index" &&
+                    beforeBody.map((BodyComponent) => <BodyComponent {...componentData} />)}
                 </div>
               </div>
               <Content {...componentData} />
