@@ -62,9 +62,7 @@ async function mouseEnterHandler(
     case "image":
       const img = document.createElement("img")
 
-      response.blob().then((blob) => {
-        img.src = URL.createObjectURL(blob)
-      })
+      img.src = targetUrl.toString()
       img.alt = targetUrl.pathname
 
       popoverInner.appendChild(img)
