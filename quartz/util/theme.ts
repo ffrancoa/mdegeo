@@ -15,6 +15,11 @@ export interface ColorScheme {
   highlight: string
 }
 
+interface Colors {
+  lightMode: ColorScheme
+  darkMode: ColorScheme
+}
+
 export interface Theme {
   typography: {
     header: string
@@ -22,11 +27,11 @@ export interface Theme {
     code: string
   }
   cdnCaching: boolean
-  colors: {
-    lightMode: ColorScheme
-    darkMode: ColorScheme
-  }
+  colors: Colors
 }
+
+export type ThemeKey = keyof Colors
+
 
 const DEFAULT_SANS_SERIF =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif'
