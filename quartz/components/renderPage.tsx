@@ -19,6 +19,7 @@ interface RenderComponents {
   footer: QuartzComponent
 }
 
+const headerRegex = new RegExp(/h[1-6]/)
 export function pageResources(
   baseDir: FullSlug | RelativeURL,
   staticResources: StaticResources,
@@ -105,18 +106,23 @@ export function renderPage(
           // header transclude
           blockRef = blockRef.slice(1)
           let startIdx = undefined
+          let startDepth = undefined
           let endIdx = undefined
           for (const [i, el] of page.htmlAst.children.entries()) {
-            if (el.type === "element" && el.tagName.match(/h[1-6]/)) {
-              if (endIdx) {
-                break
-              }
+            // skip non-headers
+            if (!(el.type === "element" && el.tagName.match(headerRegex))) continue
+            const depth = Number(el.tagName.substring(1))
 
-              if (startIdx !== undefined) {
-                endIdx = i
-              } else if (el.properties?.id === blockRef) {
+            // lookin for our blockref
+            if (startIdx === undefined || startDepth === undefined) {
+              // skip until we find the blockref that matches
+              if (el.properties?.id === blockRef) {
                 startIdx = i
+                startDepth = Number(el.tagName.substring(1))
               }
+            } else if (depth <= startDepth) {
+              // looking for new header that is same level or higher
+              endIdx = i
             }
           }
 
@@ -204,7 +210,6 @@ export function renderPage(
   )
 
   const lang = componentData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
-
   const doc = (
     <html lang={lang}>
       <Head {...componentData} />
@@ -220,8 +225,9 @@ export function renderPage(
                   ))}
                 </Header>
                 <div class="popover-hint">
-                  {slug !== "index" &&
-                    beforeBody.map((BodyComponent) => <BodyComponent {...componentData} />)}
+                  {beforeBody.map((BodyComponent) => (
+                    <BodyComponent {...componentData} />
+                  ))}
                 </div>
               </div>
               <Content {...componentData} />
