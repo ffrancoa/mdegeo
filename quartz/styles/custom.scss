@@ -66,6 +66,9 @@ p {
         &>h1 {
             font-size: 1.75em;
         }
+        &>p {
+            text-align: justify;
+        }
     }
 }
 
@@ -275,7 +278,6 @@ blockquote {
     margin: 1rem 2em 1em 0em;
     border-left: 3px solid var(--gray);
     padding-left: 1em;
-    transition: border-color 0.2s ease;
 
     &:hover {
         border-color: var(--secondary);
@@ -371,7 +373,8 @@ hr {
 // Callouts
 .callout {
     border-radius: 8px;
-    transition: border-color 0.3s ease;
+    border-style: dashed;
+    transition: border-color 0.7s ease;
     margin-left: auto;
     margin-right: auto;
     max-width: 95%;
