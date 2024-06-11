@@ -25,7 +25,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.DesktopOnly(Component.Search()),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.RecentNotes({ title: "MEMORIAS RECIENTES", limit: 2 })),
+    Component.DesktopOnly(Component.RecentNotes({ title: "Memorias Recientes", limit: 2 })),
   ],
   right: [
     Component.Graph({
@@ -37,6 +37,7 @@ export const defaultContentPageLayout: PageLayout = {
       },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
+    Component.MobileOnly(Component.RecentNotes({ title: "Memorias Recientes", limit: 2 })),
   ],
 }
 
