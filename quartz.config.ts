@@ -22,7 +22,7 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Lexend Giga", // 1. Rethink Sans 2. Young Serif 3. DM Serif Display
+        header: "Lexend Mega", // 1. Rethink Sans 2. Young Serif 3. DM Serif Display
         body: "Lexend", // 1. DM Sans 2. Aleo
         code: "Fira Code", // 1. DM Mono 2. Fira Code
       },
