@@ -61,6 +61,12 @@ p {
     line-height: 1.5rem;
 }
 
+code {
+    font-size: 0.86rem !important;
+    font-weight: 600 !important;
+    background-color: var(--misc_background2) !important;
+}
+
 .page {
     & article {
         &>h1 {
