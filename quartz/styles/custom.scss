@@ -47,6 +47,10 @@ h1 {
     font-size: 1.65rem;
 }
 
+h2 {
+    margin-bottom: 1.20rem;
+  }
+
 h3 {
     font-size: 1.25em;
 }
@@ -58,7 +62,7 @@ h4 {
 tbody,
 li,
 p {
-    line-height: 1.5rem;
+    line-height: 1.45rem;
 }
 
 code {
@@ -231,7 +235,7 @@ p.content-meta {
 // Tables
 .table-container {
     &>table {
-        margin: 0;
+        margin: 0.35rem 0 0.25rem;
         padding: 1.5rem;
         width: 100%;
     }
