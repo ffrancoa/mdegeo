@@ -29,7 +29,7 @@ const defaultOptions: Options = {
   prettyLinks: true,
   openLinksInNewTab: false,
   lazyLoad: false,
-  externalLinkIcon: true,
+  externalLinkIcon: false, // Hide symbol
 }
 
 export const CrawlLinks: QuartzTransformerPlugin<Partial<Options> | undefined> = (userOpts) => {
