@@ -279,6 +279,7 @@ figcaption {
     text-align: center;
     color: var(--gray);
     margin: 0;
+    margin-bottom: 1.25rem;
 
     a {
         font-weight: normal;
@@ -287,6 +288,10 @@ figcaption {
         &:hover {
             color: var(--tertiary) !important;
         }
+    }
+    b {
+        font-family: var(--headerFont);
+        text-transform: uppercase;
     }
 }
 
@@ -373,7 +378,10 @@ dd {
 
 // Emphasis
 lg {
-    color: var(--primary);
+    font-weight: bold;
+    color: var(--gray);;
+    font-family: var(--headerFont);
+    text-transform: uppercase;
 }
 
 
@@ -395,13 +403,18 @@ hr {
     transition: border-color 0.7s ease;
     margin-left: auto;
     margin-right: auto;
-    max-width: 95%;
 
     &[data-callout="quote"] {
         --color: var(--secondary);
         --border: var(--light);
         --bg: var(--misc_background);
     }
+
+    & > .callout-content {
+        margin-left: 1.5rem;
+        margin-right: 1.1rem;
+        text-align: justify;
+      }
 
     &:hover {
         border-color: var(--midgray);
