@@ -376,9 +376,10 @@ dd {
 }
 
 
-// Emphasis
+// Emphasis (Tables and Figures)
 lg {
     font-weight: bold;
+    font-size: 0.91rem;
     color: var(--gray);;
     font-family: var(--headerFont);
     text-transform: uppercase;
