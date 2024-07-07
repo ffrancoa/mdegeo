@@ -428,3 +428,13 @@ hr {
         color: var(--midgray);
     }
 }
+
+// Youtube Embed
+iframe {
+    display: block;
+    border: 0.3rem solid var(--misc_background);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
