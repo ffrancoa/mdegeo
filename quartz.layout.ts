@@ -28,14 +28,14 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.RecentNotes({ title: "Memorias Recientes", limit: 2 })),
   ],
   right: [
-    Component.Graph({
+    Component.DesktopOnly(Component.Graph({
       localGraph: {
         showTags: false,
       },
       globalGraph: {
         showTags: false,
       },
-    }),
+    })),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.MobileOnly(Component.RecentNotes({ title: "Memorias Recientes", limit: 2 })),
   ],
