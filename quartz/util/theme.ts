@@ -13,6 +13,7 @@ export interface ColorScheme {
   misc_background2: string
   misc_header: string
   highlight: string
+  textHighlight: string
 }
 
 interface Colors {
@@ -62,6 +63,7 @@ ${stylesheet.join("\n\n")}
   --misc_background2: ${theme.colors.lightMode.misc_background2};
   --misc_header: ${theme.colors.lightMode.misc_header};
   --highlight: ${theme.colors.lightMode.highlight};
+  --textHighlight: ${theme.colors.lightMode.textHighlight};
 
   --headerFont: "${theme.typography.header}", ${DEFAULT_SANS_SERIF};
   --bodyFont: "${theme.typography.body}", ${DEFAULT_SANS_SERIF};
@@ -83,6 +85,7 @@ ${stylesheet.join("\n\n")}
   --misc_background2: ${theme.colors.darkMode.misc_background2};
   --misc_header: ${theme.colors.darkMode.misc_header};
   --highlight: ${theme.colors.darkMode.highlight};
+  --textHighlight: ${theme.colors.darkMode.textHighlight};
 }
 `
 }

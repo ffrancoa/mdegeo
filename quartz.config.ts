@@ -42,6 +42,7 @@ const config: QuartzConfig = {
           misc_background2: "#FAF8F4",
           misc_header: "#BF616A",
           highlight: "rgba(243, 234, 199, 0.35)",
+          textHighlight: "#fff23688",
         },
         darkMode: {
           light: "#1D2021",
@@ -58,6 +59,7 @@ const config: QuartzConfig = {
           misc_background2: "#1B1B1B",
           misc_header: "#BF616A",
           highlight: "rgba(50, 48, 47, 0.35)",
+          textHighlight: "#b3aa0288",
         },
       },
     },
