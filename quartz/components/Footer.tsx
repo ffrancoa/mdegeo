@@ -11,7 +11,6 @@ export default ((opts?: Options) => {
     const links = opts?.links ?? []
     return (
       <footer class={`${displayClass ?? ""}`}>
-        <hr />
         <p style="text-align:center">🌙<br></br>Francesco Franco, © {year}</p>
       </footer>
     )

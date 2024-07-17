@@ -5,6 +5,7 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
+  afterBody: [],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/ffrancoa",
@@ -37,8 +38,8 @@ export const defaultContentPageLayout: PageLayout = {
       },
     })),
     Component.DesktopOnly(Component.TableOfContents()),
-    Component.MobileOnly(Component.RecentNotes({ title: "Memorias Recientes", limit: 2 })),
   ],
+  
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
