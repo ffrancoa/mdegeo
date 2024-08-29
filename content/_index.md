@@ -8,7 +8,7 @@ enableToc: false
 
 **Memorias de Geotecnia** es un proyecto que nace del deseo de difundir la Ingeniería Geotécnica — y otras ramas relacionadas — hacia cualquier persona con un interés por conocer más de este apasionante mundo de las Ciencias Geológicas.
 
-¿Qué esperas? Alístate, y empecemos a escalar las montañas.
+¿Qué esperas? Alístate, y empecemos a escalar.
 
 ![Cover](/images/cover.jpg)
 <figcaption>Montañas de Saile, Austria (fotografía tomada por <a href="https://unsplash.com/@onixion">Alin Andersen</a>)</figcaption>
