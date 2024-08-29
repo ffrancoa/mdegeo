@@ -22,8 +22,8 @@ export default {
       quote: "Cita",
     },
     backlinks: {
-      title: "Enlaces de Retroceso",
-      noBacklinksFound: "No se han encontrado enlaces traseros",
+      title: "Retroenlaces",
+      noBacklinksFound: "No se han encontrado retroenlaces",
     },
     themeToggle: {
       lightMode: "Modo claro",
@@ -53,6 +53,9 @@ export default {
     tableOfContents: {
       title: "Tabla de Contenido",
     },
+    contentMeta: {
+      readingTime: ({ minutes }) => `Se lee en ${minutes} min`,
+    },
   },
   pages: {
     rss: {
@@ -62,19 +65,20 @@ export default {
     error: {
       title: "No se encontró.",
       notFound: "Esta página es privada o no existe.",
-    },
+      home: "Regresa a la página principal",
+   },
     folderContent: {
       folder: "Carpeta",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "1 artículo en esta carpeta" : `${count} artículos en esta carpeta.`,
+        count === 1 ? "1 artículo en esta carpeta." : `${count} artículos en esta carpeta.`,
     },
     tagContent: {
       tag: "Etiqueta",
       tagIndex: "Índice de Etiquetas",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "1 artículo con esta etiqueta" : `${count} artículos con esta etiqueta.`,
+        count === 1 ? "1 artículo con esta etiqueta." : `${count} artículos con esta etiqueta.`,
       showingFirst: ({ count }) => `Mostrando las primeras ${count} etiquetas.`,
-      totalTags: ({ count }) => `Se encontraron ${count} etiquetas en total.`,
+      totalTags: ({ count }) => `Se han encontrado ${count} etiquetas en total.`,
     },
   },
 } as const satisfies Translation
