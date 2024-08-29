@@ -44,12 +44,9 @@ export default ((userOpts?: Partial<Options>) => {
   // memoized
   let fileTree: FileNode
   let jsonTree: string
+  let lastBuildId: string = ""
 
   function constructFileTree(allFiles: QuartzPluginData[]) {
-    if (fileTree) {
-      return
-    }
-
     // Construct tree from allFiles
     fileTree = new FileNode("")
     allFiles.forEach((file) => fileTree.add(file))
@@ -70,19 +67,23 @@ export default ((userOpts?: Partial<Options>) => {
     }
 
     // Get all folders of tree. Initialize with collapsed state
-    const folders = fileTree.getFolderPaths(opts.folderDefaultState === "collapsed")
-
     // Stringify to pass json tree as data attribute ([data-tree])
+    const folders = fileTree.getFolderPaths(opts.folderDefaultState === "collapsed")
     jsonTree = JSON.stringify(folders)
   }
 
   const Explorer: QuartzComponent = ({
+    ctx,
     cfg,
     allFiles,
     displayClass,
     fileData,
   }: QuartzComponentProps) => {
-    constructFileTree(allFiles)
+    if (ctx.buildId !== lastBuildId) {
+      lastBuildId = ctx.buildId
+      constructFileTree(allFiles)
+    }
+
     return (
       <div class={classNames(displayClass, "explorer")}>
         <button
@@ -92,6 +93,8 @@ export default ((userOpts?: Partial<Options>) => {
           data-collapsed={opts.folderDefaultState}
           data-savestate={opts.useSavedState}
           data-tree={jsonTree}
+          aria-controls="explorer-content"
+          aria-expanded={opts.folderDefaultState === "open"}
         >
           <h2>{opts.title ?? i18n(cfg.locale).components.explorer.title}</h2>
           <svg
