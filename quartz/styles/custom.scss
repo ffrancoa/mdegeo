@@ -133,7 +133,7 @@ div.toc {
 
     #toc-content ul {
         li {
-            line-height: 1.35rem;
+            line-height: 1.3rem;
             margin-bottom: 0.3rem;
         }
 
@@ -191,7 +191,7 @@ div.recent-notes>ul.recent-ul>li {
 
 .recent-notes a {
     display: block;
-    line-height: 1.45rem;
+    line-height: 1.3rem;
 }
 
 .recent-notes .desc p {
@@ -249,12 +249,12 @@ th {
     text-transform: uppercase;
     color: var(--misc_header);
     background-color: var(--misc_background);
-    border: 1px solid var(--lightgray);
+    border: 0.1rem solid var(--lightgray);
     padding: 8px;
 }
 
 td {
-    border: 1px solid var(--lightgray);
+    border: 0.1rem solid var(--lightgray);
     padding: 0.35em 0.5em;
     background-color: var(--misc_background2);
     font-family: var(--bodyFont);
@@ -270,8 +270,19 @@ img {
     margin-top: 1.5rem;
     margin-left: auto;
     margin-right: auto;
-
     filter: sepia(10%) grayscale(20%);
+}
+
+img.svg_figure {
+    filter: none;
+    background-color: #F7F3EE;
+    transition: 0.25s ease;
+    border: 0.15rem solid var(--light);
+}
+
+img.svg_figure:hover {
+    transform: scale(1.15);
+    border: 0.1rem solid var(--lightgray);
 }
 
 
@@ -290,8 +301,10 @@ figcaption {
             color: var(--tertiary) !important;
         }
     }
-    b {
+    i { // Trick
         font-family: var(--headerFont);
+        font-weight: bold;
+        font-style: normal;
         text-transform: uppercase;
     }
 }
@@ -401,8 +414,9 @@ hr {
 // Callouts
 .callout {
     border-radius: 8px;
-    border-style: dashed;
-    transition: border-color 0.7s ease;
+    border-width: 0.15rem;
+    border-color: transparent;
+    transition: border-color 0.5s ease;
     margin-left: auto;
     margin-right: auto;
 
@@ -419,7 +433,7 @@ hr {
       }
 
     &:hover {
-        border-color: var(--midgray);
+        border-color: var(--lightgray);
     }
 
     p,
