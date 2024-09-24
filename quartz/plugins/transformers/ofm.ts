@@ -325,7 +325,7 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
               tagRegex,
               (_value: string, tag: string) => {
                 // Check if the tag only includes numbers
-                if (/^\d+$/.test(tag)) {
+                if (/^[\/\d]+$/.test(tag)) {
                   return false
                 }
 
