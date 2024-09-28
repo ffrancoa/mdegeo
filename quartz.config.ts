@@ -9,6 +9,7 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Memorias de \nGeotecnia",
+    pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: false,
     analytics: {
