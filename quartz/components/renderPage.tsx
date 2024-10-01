@@ -124,7 +124,6 @@ export function renderPage(
             } else if (depth <= startDepth) {
               // looking for new header that is same level or higher
               endIdx = i
-              break
             }
           }
 
@@ -242,8 +241,8 @@ export function renderPage(
               </div>
             </div>
             {RightComponent}
-            <Footer {...componentData} />
           </Body>
+          <Footer {...componentData} />
         </div>
       </body>
       {pageResources.js
